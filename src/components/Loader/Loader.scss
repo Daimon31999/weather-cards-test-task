@@ -1,0 +1,11 @@
+@import '@styles/variables';
+
+.loader {
+  background-color: $main-layout-color;
+  height: 50vh;
+  margin: 20px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

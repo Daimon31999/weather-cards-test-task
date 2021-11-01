@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,500,600,700,800,800i,900i&display=swap');
+
+*,
+*::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+button.ant-btn {
+  border-radius: $border-radius-btn;
+}
+
+input.ant-input,
+.ant-input-password,
+div.ant-select-selector,
+textarea.ant-input {
+  border-radius: $border-radius-btn !important;
+}
+
+.ant-modal-content {
+  border-radius: $border-radius-btn;
+}

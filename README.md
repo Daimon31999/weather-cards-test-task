@@ -1,44 +1,49 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+ ## Project title: Weather cards.
 
-## Available Scripts
 
-In the project directory, you can run:
+Идея проекта в том чтобы получать информацию о погодных условиях в локациях ранее зарегистрированных пользователем в приложении. 
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Для хранения данных можешь использовать IndexedDB или же хранить всё в виде JSON-a в browser storage. Проект состоит из 4 компонентов.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `yarn test`
+### 1. Landing Page. Можешь взять что-то готовое и адаптировать под проект.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Форма авторизации (Valid credentials: admin/123456).  Храни состояние авторизации в localStorage
 
-### `yarn build`
+### 3. Форма добавления локации (авторизованный)  Форма будет состоять из полей:       
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Title - text,      
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Coordinates (lat,lan) - number,  (could be replaced with city name)     
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Description - text,     
 
-### `yarn eject`
+Tags -  text, separated by comma / or use a custom component 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 4. Details Page (авторизованный)    Содержит информацию о погоде, ранее зарегистрированных локаций в виде таблицы или Кардов (card) Weather API docs: https://openweathermap.org/current
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Request example: http://api.openweathermap.org/data/2.5/weather?lat=44&lon=44&APPID=0ecc34d6d329fb1c62bcf0bf7778ebb1
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+API_KEY =  0ecc34d6d329fb1c62bcf0bf7778ebb1
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Requirements: 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+You can use:* Libraries, modules that contain icons(font-awesome), stylesheest (bootstrap, mat-bootstrap, other...).* Component for tags.
+
+
+## Use:
+
+* Guards, 
+
+* Interceptos, 
+
+* Custom Components, 
+
+* Use Lazy Loaded modules, 
+
+* Reactive Forms,
+
+* Form Validations.

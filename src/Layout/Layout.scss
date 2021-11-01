@@ -1,0 +1,21 @@
+@import '../styles/variables';
+
+.main-layout {
+  &.ant-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: $main-layout-color;
+
+    .content-layout-outer {
+      &.ant-layout {
+        .content-layout-inner {
+          &.ant-layout-content {
+            background-color: $main-layout-color;
+            padding: 30px 45px;
+            min-height: calc(100vh - 70px);
+          }
+        }
+      }
+    }
+  }
+}
