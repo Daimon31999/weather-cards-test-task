@@ -1,7 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { Layout as AntdLayout } from 'antd';
-import { Header } from 'antd/lib/layout/layout';
-
+import Header from '../components/Header/Header';
 import './Layout.scss';
 
 const { Content } = AntdLayout;

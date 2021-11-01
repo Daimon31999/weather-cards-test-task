@@ -1,0 +1,20 @@
+@import '../../styles/variables';
+
+.ant-layout {
+  .ant-layout-header {
+    display: flex;
+    height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $white;
+  }
+
+  .end-container {
+    display: flex;
+    align-items: center;
+    margin: 0 45px;
+    gap: 10px;
+    color: $label-text-color;
+    font: $small-font;
+  }
+}

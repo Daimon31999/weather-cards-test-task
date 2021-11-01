@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+
+.link-button {
+  &.focus {
+    border-color: $antd-btn-color;
+    color: $antd-btn-color;
+  }
+
+  a:hover {
+    color: none;
+  }
+}

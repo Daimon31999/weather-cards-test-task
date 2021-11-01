@@ -1,68 +1,75 @@
-import { FC, useEffect, useState, ChangeEvent } from 'react';
-import { Form, Input, Button } from 'antd';
-import { messages } from '../../utils';
+import { Button, Form, Input } from 'antd';
+import { FC, useEffect } from 'react';
+import { logInAction } from '../../store/auth/authSlice';
+import { useAppDispatch } from '../../store/hooks';
+import { messages, VALID_PASSWORD, VALID_USER_NAME } from '../../utils';
+import { validatePassword, validateUserName } from './helpers';
+import './LoginPage.scss';
 
-const { title, buttons, form: loginPageForm } = messages.pages.authPage;
-const { loginBtn } = buttons;
-const { emailInput, passwordInput } = loginPageForm;
+const { form: loginPageForm } = messages.pages.loginPage;
+const { userNameInput, passwordInput, loginBtn } = loginPageForm;
 
 const LoginPage: FC = () => {
   const [form] = Form.useForm();
-  const [loginInputValue, setLoginInputValue] = useState('');
-  const [passwordInputValue, setPasswordInputValue] = useState('');
+  const dispatch = useAppDispatch();
 
-  const handleLoginInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginInputValue(e.target.value);
+  useEffect(() => {
+    form.setFieldsValue({
+      [userNameInput.name]: VALID_USER_NAME,
+      [passwordInput.name]: VALID_PASSWORD,
+    });
+  }, []);
+
+  const onSubmit = () => {
+    const userName = form.getFieldValue(userNameInput.name);
+    const password = form.getFieldValue(passwordInput.name);
+
+    dispatch(logInAction({ userName, password }));
   };
-
-  const handlePasswordInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPasswordInputValue(e.target.value);
-  };
-
-  const onFinish = () => {
-    console.log('on finish');
-  };
-
-  // const onFinish = ({ email, password }: IAuthPayload) => {
-  //   dispatch(loginRequestAction({ email, password }));
-  // };
-
-  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatch(emailInputChangeAction(e.target.value));
-  // };
-
-  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatch(passwordInputChangeAction(e.target.value));
-  // };
-
-  // const handleForgotPasswordBtnClick = () => {
-  //   dispatch(redirectAction('/forgot-password'));
-  // };
 
   return (
     <div className="login-page">
-      <Form form={form} name="basic" className="login-form" onFinish={onFinish}>
+      <Form
+        form={form}
+        name="login-form"
+        labelCol={{ span: 10 }}
+        wrapperCol={{ span: 14 }}
+        initialValues={{ remember: true }}
+        onFinish={onSubmit}
+        autoComplete="off"
+      >
         <Form.Item
-          label={emailInput.label}
-          name={emailInput.name}
-          rules={[{ required: true, type: 'email', message: emailInput.placeholder }]}
+          label={userNameInput.label}
+          name={userNameInput.name}
+          rules={[{ required: true, message: 'Please input your username!' }]}
         >
-          <Input onChange={handleLoginInputChange} />
+          <Input />
         </Form.Item>
 
         <Form.Item
           label={passwordInput.label}
           name={passwordInput.name}
-          rules={[{ required: true, message: passwordInput.placeholder }]}
+          rules={[{ required: true, message: 'Please input your password!' }]}
         >
-          <Input.Password onChange={handlePasswordInputChange} />
+          <Input.Password />
         </Form.Item>
 
-        <div className="buttons">
-          <Button id="login-btn" type="primary" htmlType="submit">
-            {loginBtn}
-          </Button>
-        </div>
+        <Form.Item shouldUpdate wrapperCol={{ offset: 4, span: 20 }}>
+          {({ getFieldsValue }) => {
+            const { [passwordInput.name]: passwordValue, [userNameInput.name]: userNameValue } =
+              getFieldsValue();
+
+            const validation = !!(
+              validateUserName(userNameValue) && validatePassword(passwordValue)
+            );
+
+            return (
+              <Button type="primary" htmlType="submit" disabled={!validation}>
+                {loginBtn}
+              </Button>
+            );
+          }}
+        </Form.Item>
       </Form>
     </div>
   );

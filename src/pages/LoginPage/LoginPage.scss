@@ -1,0 +1,11 @@
+@import '../../styles/variables';
+
+.login-page {
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+
+  .ant-form {
+    padding: 40px;
+  }
+}

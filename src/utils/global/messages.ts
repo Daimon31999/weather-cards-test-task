@@ -1,24 +1,62 @@
-import { getInputCorrectPlaceholder } from './helpers';
+import { getInputCorrectPlaceholder, getInputPlaceholder } from './helpers';
 
 export const messages = {
-  alerts: {},
+  alerts: {
+    error: {
+      authError: 'Incorrect login or password !',
+    },
+  },
+  auth: {
+    isLoggedInName: 'is-logged-in',
+  },
   components: {
     header: {
       login: 'Login',
+      logout: 'Logout',
+      home: 'Home',
+    },
+
+    addLocationModal: {
+      titleMsg: 'Title',
+      form: {
+        titleInput: {
+          label: 'Title',
+          name: 'title',
+          placeholder: getInputPlaceholder('title'),
+        },
+
+        coordinatesInput: {
+          label: 'Coordinates',
+          name: 'coordinates',
+          placeholder: getInputPlaceholder('coordinates'),
+        },
+
+        descriptionInput: {
+          label: 'Description',
+          name: 'description',
+          placeholder: getInputPlaceholder('description'),
+        },
+
+        tagsInput: {
+          label: 'Tags',
+          name: 'tags',
+          placeholder: getInputPlaceholder('tags'),
+        },
+      },
     },
   },
   pages: {
     landingPage: {
       title: 'Landing Page',
     },
-    authPage: {
+    loginPage: {
       title: 'Login Page',
       buttons: {
         loginBtn: 'Login',
       },
       form: {
-        emailInput: {
-          label: 'E-mail',
+        userNameInput: {
+          label: 'User Name',
           name: 'email',
           placeholder: getInputCorrectPlaceholder('email'),
         },
@@ -27,7 +65,7 @@ export const messages = {
           name: 'password',
           placeholder: getInputCorrectPlaceholder('password'),
         },
-        rememberMe: 'Remember me',
+        loginBtn: 'Login',
       },
     },
   },
