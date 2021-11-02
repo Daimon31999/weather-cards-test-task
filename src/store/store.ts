@@ -1,11 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import authReducer from './auth/authSlice';
 import pathReducer from './redirect/redirectSlice';
+import addLocationModalReducer from './locations/locationsSlice';
+import weatherReducer from './weater/weaterSlice';
 
 export const store = configureStore({
   reducer: {
     path: pathReducer,
     auth: authReducer,
+    addLocationModal: addLocationModalReducer,
+    weather: weatherReducer,
   },
 });
 

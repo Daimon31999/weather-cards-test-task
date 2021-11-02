@@ -20,3 +20,14 @@ export interface IScoreConfig {
 export interface IObjectLiteral<T = any> {
   [key: string]: T;
 }
+
+export type TagModelType = Array<string>;
+
+export interface ILocationModel {
+  id: string;
+  title: string;
+  city: string;
+  description: string;
+  tags: TagModelType;
+}
+export type LocationsType = Array<ILocationModel>;

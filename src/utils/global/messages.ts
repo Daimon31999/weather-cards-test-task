@@ -4,6 +4,8 @@ export const messages = {
   alerts: {
     error: {
       authError: 'Incorrect login or password !',
+      getWeatherFailed: 'Get Weather Failed !',
+      emptyLocatorsList: 'your locations list is empty! Please add a location',
     },
   },
   auth: {
@@ -25,10 +27,10 @@ export const messages = {
           placeholder: getInputPlaceholder('title'),
         },
 
-        coordinatesInput: {
-          label: 'Coordinates',
-          name: 'coordinates',
-          placeholder: getInputPlaceholder('coordinates'),
+        locationInput: {
+          label: 'City',
+          name: 'city',
+          placeholder: getInputPlaceholder('city'),
         },
 
         descriptionInput: {
@@ -42,13 +44,19 @@ export const messages = {
           name: 'tags',
           placeholder: getInputPlaceholder('tags'),
         },
+
+        addLocationBtnMsg: 'Add Location',
       },
     },
   },
   pages: {
     landingPage: {
       title: 'Landing Page',
+      modal: {
+        modalTitle: 'Add Location Form',
+      },
     },
+
     loginPage: {
       title: 'Login Page',
       buttons: {

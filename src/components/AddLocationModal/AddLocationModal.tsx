@@ -1,43 +1,47 @@
-import { Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import { FC } from 'react';
-import { useAppDispatch } from '../../store/hooks';
+import { FC, useEffect } from 'react';
+import { addLocationAction, selectorTags } from '../../store/locations/locationsSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { messages } from '../../utils';
 import TagInput from '../TagInput/TagInput';
 import './AddLocationModal.scss';
 
-/**
- * Форма добавления локации (авторизованный)
- * Форма будет состоять из полей:
- * Title - text,
- * Coordinates (lat,lan) - number,  (could be replaced with city name)
- * Description - text,
- * Tags -  text, separated by comma / or use a custom component
- */
-
-const { coordinatesInput, titleInput, descriptionInput, tagsInput } =
+const { locationInput, titleInput, descriptionInput, tagsInput, addLocationBtnMsg } =
   messages.components.addLocationModal.form;
 
 const AddLocationModal: FC = () => {
   const [form] = useForm();
   const dispatch = useAppDispatch();
+  const tags = useAppSelector(selectorTags);
+
+  useEffect(() => {
+    form.setFieldsValue({
+      [tagsInput.name]: '',
+    });
+
+    form.setFieldsValue({
+      [tagsInput.name]: [...tags],
+    });
+  }, [tags]);
 
   const onSubmit = () => {
-    const titleValue = form.getFieldValue(titleInput.name);
-    const descriptionValue = form.getFieldValue(descriptionInput.name);
-    const coordinatesValue = form.getFieldValue(coordinatesInput.name);
-    const tagsValue = form.getFieldValue(tagsInput.name);
+    const title = form.getFieldValue(titleInput.name);
+    const description = form.getFieldValue(descriptionInput.name);
+    const city = form.getFieldValue(locationInput.name);
+    const tagsV = form.getFieldValue(tagsInput.name);
+    const obj = { title, description, city, tags: tagsV };
 
-    // dispatch(logInAction({ userName, password }));
+    dispatch(addLocationAction(obj));
   };
 
   return (
-    <div className="">
+    <div className="add-location-modal">
       <Form
         form={form}
-        name="login-form"
-        labelCol={{ span: 10 }}
-        wrapperCol={{ span: 14 }}
+        name="add-location-form"
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
         initialValues={{ remember: true }}
         onFinish={onSubmit}
         autoComplete="off"
@@ -51,9 +55,9 @@ const AddLocationModal: FC = () => {
         </Form.Item>
 
         <Form.Item
-          label={coordinatesInput.label}
-          name={coordinatesInput.name}
-          rules={[{ required: true, message: coordinatesInput.placeholder }]}
+          label={locationInput.label}
+          name={locationInput.name}
+          rules={[{ required: true, message: locationInput.placeholder }]}
         >
           <Input />
         </Form.Item>
@@ -66,13 +70,31 @@ const AddLocationModal: FC = () => {
           <Input />
         </Form.Item>
 
-        <Form.Item
-          label={tagsInput.label}
-          name={tagsInput.name}
-          rules={[{ required: true, message: tagsInput.placeholder }]}
-        >
+        <Form.Item label={tagsInput.label} name={tagsInput.name}>
           {/* <Input /> */}
           <TagInput />
+        </Form.Item>
+
+        <Form.Item
+          className="add-location-submit-btn"
+          shouldUpdate
+          wrapperCol={{ offset: 20, span: 4 }}
+        >
+          {({ getFieldsValue }) => {
+            const {
+              [titleInput.name]: titleValue,
+              [locationInput.name]: coordinatesValue,
+              [descriptionInput.name]: descriptionValue,
+            } = getFieldsValue();
+
+            const validation = !!(titleValue && coordinatesValue && descriptionValue);
+
+            return (
+              <Button type="primary" htmlType="submit" disabled={!validation}>
+                {addLocationBtnMsg}
+              </Button>
+            );
+          }}
         </Form.Item>
       </Form>
     </div>

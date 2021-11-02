@@ -1,0 +1,34 @@
+.weather-card {
+  border-radius: 10px;
+  position: relative;
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      .anticon-delete svg {
+        color: red;
+      }
+    }
+
+    .anticon-delete svg {
+      width: 18px;
+      height: 18px;
+      transition: color 0.3s;
+    }
+  }
+
+  .temperature {
+    font-size: 28px;
+    line-height: 50px;
+    margin-bottom: 10px;
+  }
+}

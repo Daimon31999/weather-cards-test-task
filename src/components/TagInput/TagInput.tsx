@@ -1,26 +1,37 @@
-import { ChangeEvent, FC, useRef, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 import { Tag, Input } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 import { PlusOutlined } from '@ant-design/icons';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectorTags, setTagsAction } from '../../store/locations/locationsSlice';
+import './TagInput.scss';
 
 const TagInput: FC = () => {
   const initialState = {
-    tags: ['Tag 1', 'Tag 2', 'Tag 3'],
     inputVisible: false,
     inputValue: '',
   };
 
   const [state, setState] = useState(initialState);
+  const tagsState = useAppSelector(selectorTags);
+  const dispatch = useAppDispatch();
+
   const inputRef = useRef(null);
 
+  useEffect(() => {
+    if (state.inputVisible) {
+      (inputRef as React.RefObject<HTMLInputElement>).current?.focus();
+    }
+  }, [state.inputVisible]);
+
   const handleClose = (removedTag: string) => {
-    const tags = state.tags.filter((tag) => tag !== removedTag);
+    const tags = tagsState.filter((tag) => tag !== removedTag);
     console.log(tags);
-    setState({ ...state, tags });
+    dispatch(setTagsAction(tags));
+    // setState({ ...state, tags });
   };
 
   const showInput = () => {
-    (inputRef as React.RefObject<HTMLInputElement>).current?.focus();
     setState({ ...state, inputVisible: true });
   };
 
@@ -30,13 +41,11 @@ const TagInput: FC = () => {
 
   const handleInputConfirm = () => {
     const { inputValue } = state;
-    let { tags } = state;
-    if (inputValue && tags.indexOf(inputValue) === -1) {
-      tags = [...tags, inputValue];
+    if (inputValue && tagsState.indexOf(inputValue) === -1) {
+      dispatch(setTagsAction([...tagsState, inputValue]));
     }
-    console.log(tags);
+    console.log(tagsState);
     setState({
-      tags,
       inputVisible: false,
       inputValue: '',
     });
@@ -61,8 +70,8 @@ const TagInput: FC = () => {
     );
   };
 
-  const { tags, inputVisible, inputValue } = state;
-  const tagChild = tags.map(forMap);
+  const { inputVisible, inputValue } = state;
+  const tagChild = tagsState.map(forMap);
 
   return (
     <>

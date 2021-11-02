@@ -1,4 +1,17 @@
 @import '../../styles/variables';
 
 .landing-page {
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .cards-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
 }
