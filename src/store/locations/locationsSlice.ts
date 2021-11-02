@@ -1,75 +1,37 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
+import { message as AntdMessage } from 'antd';
+import { fetchWeatherByCityNameRequest } from '../../api/requests';
 import { ILocationModel, LocationsType, TagModelType } from '../../utils/global/interfaces';
 import { RootState } from '../store';
+import { messages } from '../../utils';
 
 export interface ILocationModalState {
   tags: TagModelType;
   locations: LocationsType;
+  status: 'loading' | 'idle';
 }
 
 const initialState: ILocationModalState = {
-  tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-  locations: [
-    {
-      id: '12',
-      title: 'Title 1',
-      description: 'Descriptoin',
-      city: 'Moscow',
-      tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    },
-    {
-      id: '11',
-      title: 'Title 2',
-      description: 'London',
-      city: 'City',
-      tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    },
-    {
-      id: '142',
-      title: 'Title 3',
-      description: 'Descriptoin',
-      city: 'City',
-      tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    },
-    {
-      id: '152',
-      title: 'Title 4',
-      description: 'Descriptoin',
-      city: 'City',
-      tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    },
-
-    {
-      id: '1asdf2',
-      title: 'Title 1',
-      description: 'Descriptoin',
-      city: 'City',
-      tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    },
-    {
-      id: '1adsfasd1',
-      title: 'Title 2',
-      description: 'Descriptoin',
-      city: 'City',
-      tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    },
-    {
-      id: '14232',
-      title: 'Title 3',
-      description: 'Descriptoin',
-      city: 'City',
-      tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    },
-    {
-      id: '15br2',
-      title: 'Title 4',
-      description: 'Descriptoin',
-      city: 'City',
-      tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    },
-  ],
+  tags: [],
+  locations: [],
+  status: 'idle',
 };
+
+const { getWeatherFailed } = messages.alerts.error;
+
+export const addLocationAction = createAsyncThunk(
+  'weather/fetchWeatherByCityName',
+  async (location: Omit<ILocationModel, 'id' | 'weather'>) => {
+    const response = await fetchWeatherByCityNameRequest(location.city);
+
+    return {
+      ...location,
+      id: uuidv4(),
+      weather: response.data,
+    };
+  },
+);
 
 export const addLocationModalSlice = createSlice({
   name: 'addLocationModal',
@@ -79,23 +41,32 @@ export const addLocationModalSlice = createSlice({
       state.tags = action.payload;
     },
 
-    addLocationAction: (state, action: PayloadAction<Omit<ILocationModel, 'id'>>) => {
-      state.locations.push({ ...action.payload, id: uuidv4() });
-    },
-
     removeLocationAction: (state, action: PayloadAction<string>) => {
       const index = state.locations.findIndex((location) => location.id === action.payload);
 
       state.locations.splice(index, 1);
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(addLocationAction.pending, (state) => {
+      state.status = 'loading';
+    });
+
+    builder.addCase(addLocationAction.fulfilled, (state, action) => {
+      state.status = 'idle';
+      state.locations.push(action.payload);
+    });
+
+    builder.addCase(addLocationAction.rejected, (state) => {
+      state.status = 'idle';
+      AntdMessage.error(getWeatherFailed);
+    });
+  },
 });
 
-export const { setTagsAction, addLocationAction, removeLocationAction } =
-  addLocationModalSlice.actions;
+export const { setTagsAction, removeLocationAction } = addLocationModalSlice.actions;
 
-export const selectorTags = (state: RootState) => state.location.location.tags;
-export const selectorLocations = (state: RootState) => state.location.location.locations;
-export const selectorWeather = (state: RootState) => state.location.weather;
+export const selectorTags = (state: RootState) => state.location.tags;
+export const selectorLocation = (state: RootState) => state.location;
 
 export default addLocationModalSlice.reducer;

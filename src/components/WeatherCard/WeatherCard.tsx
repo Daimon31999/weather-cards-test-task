@@ -3,8 +3,7 @@ import { Card, Tag } from 'antd';
 import { FC, useEffect } from 'react';
 import Fallback from '../../router/Fallback';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { removeLocationAction, selectorWeather } from '../../store/locations/locationsSlice';
-import { getWeatherByCountryName } from '../../store/weater/weaterSlice';
+import { removeLocationAction, selectorLocation } from '../../store/locations/locationsSlice';
 import { ILocationModel } from '../../utils/global/interfaces';
 import './WeatherCard.scss';
 
@@ -15,21 +14,17 @@ interface IWeatherCardProps {
 const WeatherCard: FC<IWeatherCardProps> = ({ location }) => {
   const { id, title, description, city, tags } = location;
   const dispatch = useAppDispatch();
-  const { status, weatherData } = useAppSelector(selectorWeather);
-
-  useEffect(() => {
-    dispatch(getWeatherByCountryName(city));
-  }, [id]);
+  const { status, locations } = useAppSelector(selectorLocation);
 
   const handleDeleteBtnClick = () => {
     dispatch(removeLocationAction(id));
   };
 
-  if (status === 'loading' || !weatherData) {
+  if (status === 'loading') {
     return <Fallback />;
   }
 
-  const temperature = weatherData.main.temp;
+  const temperature = locations.find((loc) => loc.city === city)?.weather?.main?.temp;
 
   return (
     <Card className="weather-card" key={id} title={`${title} - ${city}`}>
@@ -37,7 +32,7 @@ const WeatherCard: FC<IWeatherCardProps> = ({ location }) => {
       <div className="close" onClick={handleDeleteBtnClick}>
         <DeleteOutlined />
       </div>
-      <p>Description: {description}</p>
+      <p>{description}</p>
       <div className="temperature">{temperature} °C</div>
 
       {tags && tags.map((tag, i) => <Tag key={tag}>{tag}</Tag>)}

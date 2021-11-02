@@ -1,7 +1,11 @@
 import { Button, Form, Input } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { FC, useEffect } from 'react';
-import { addLocationAction, selectorTags } from '../../store/locations/locationsSlice';
+import {
+  addLocationAction,
+  selectorTags,
+  setTagsAction,
+} from '../../store/locations/locationsSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { messages } from '../../utils';
 import TagInput from '../TagInput/TagInput';
@@ -37,6 +41,8 @@ const AddLocationModal: FC<IAddLocationModelProps> = ({ handleCancel }) => {
     const obj = { title, description, city, tags: tagsV };
 
     dispatch(addLocationAction(obj));
+    dispatch(setTagsAction([]));
+    form.resetFields();
   };
 
   return (

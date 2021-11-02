@@ -4,7 +4,7 @@ export const messages = {
   alerts: {
     error: {
       authError: 'Incorrect login or password !',
-      getWeatherFailed: 'Get Weather Failed !',
+      getWeatherFailed: 'Get Weather Failed: Incorrect city !',
       emptyLocatorsList: 'your locations list is empty! Please add a location',
     },
   },

@@ -31,6 +31,7 @@ export interface ILocationModel {
   city: string;
   description: string;
   tags: TagModelType;
+  weather: OpenWeatherModelType;
 }
 export type LocationsType = Array<ILocationModel>;
 
