@@ -6,10 +6,11 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { redirectAction, selectorPath } from '../store/redirect/redirectSlice';
 
 const Redirect: FC = ({ children }) => {
-  // TODO: move to custom hook (repeats in main router)
-  const authState = useAppSelector(selectorAuth);
   const dispatch = useAppDispatch();
+
+  const authState = useAppSelector(selectorAuth);
   const { path } = useAppSelector(selectorPath);
+
   const history = useHistory();
 
   useEffect(() => {

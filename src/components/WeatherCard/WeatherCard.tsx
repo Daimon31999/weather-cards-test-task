@@ -1,6 +1,6 @@
-import { DeleteOutlined } from '@ant-design/icons';
+import { FC } from 'react';
 import { Card, Tag } from 'antd';
-import { FC, useEffect } from 'react';
+import { DeleteOutlined } from '@ant-design/icons';
 import Fallback from '../../router/Fallback';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { removeLocationAction, selectorLocation } from '../../store/locations/locationsSlice';
@@ -13,6 +13,7 @@ interface IWeatherCardProps {
 
 const WeatherCard: FC<IWeatherCardProps> = ({ location }) => {
   const { id, title, description, city, tags } = location;
+
   const dispatch = useAppDispatch();
   const { status, locations } = useAppSelector(selectorLocation);
 
@@ -34,7 +35,6 @@ const WeatherCard: FC<IWeatherCardProps> = ({ location }) => {
       </div>
       <p>{description}</p>
       <div className="temperature">{temperature} °C</div>
-
       {tags && tags.map((tag, i) => <Tag key={tag}>{tag}</Tag>)}
     </Card>
   );

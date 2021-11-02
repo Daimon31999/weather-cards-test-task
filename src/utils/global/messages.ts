@@ -8,9 +8,14 @@ export const messages = {
       emptyLocatorsList: 'your locations list is empty! Please add a location',
     },
   },
+  routes: {
+    homeRoute: '/',
+    loginRoute: '/login',
+  },
   auth: {
     isLoggedInName: 'is-logged-in',
   },
+
   components: {
     header: {
       login: 'Login',

@@ -1,6 +1,6 @@
+import { FC, useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import { FC, useEffect } from 'react';
 import {
   addLocationAction,
   selectorTags,

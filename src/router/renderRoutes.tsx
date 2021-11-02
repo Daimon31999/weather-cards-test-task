@@ -1,8 +1,11 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import { messages } from '../utils';
 import { IRoutesProps } from '../utils/global/interfaces';
 
-export const renderRoutes = (routes: IRoutesProps[], isLoggedIn: boolean): React.ReactNode => {
+export const renderRoutes = (routes: IRoutesProps[], isLoggedIn: boolean): ReactNode => {
+  const { loginRoute } = messages.routes;
+
   return routes.map(({ name, path, Component, exact }) => {
     return (
       <Route
@@ -10,7 +13,7 @@ export const renderRoutes = (routes: IRoutesProps[], isLoggedIn: boolean): React
         exact={exact}
         path={path}
         render={() => {
-          return isLoggedIn ? <Component /> : <Redirect to="/login" />;
+          return isLoggedIn ? <Component /> : <Redirect to={loginRoute} />;
         }}
       />
     );

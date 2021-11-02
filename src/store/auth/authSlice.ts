@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { message as AntdMessage } from 'antd';
-import { IAuthPayload } from '../../types/auth';
+
 import { messages, VALID_PASSWORD, VALID_USER_NAME } from '../../utils';
 import { getUserAuthenticatedState, setUserAuthenticatedState } from '../../utils/global/helpers';
+import { IAuthPayload } from '../../utils/global/interfaces';
 import { RootState } from '../store';
 
 export interface IAuthState {

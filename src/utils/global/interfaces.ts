@@ -1,5 +1,12 @@
 import { IOpenWeatherResponseModel } from '../../api/openWeather';
 
+export interface IAuthPayload {
+  userName: string;
+  password: string;
+}
+
+export type WeatherType = Array<IOpenWeatherResponseModel>;
+
 export interface IWrapperProps {
   children: React.ReactNode;
 }
@@ -18,11 +25,6 @@ export interface IScoreConfig {
   step: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IObjectLiteral<T = any> {
-  [key: string]: T;
-}
-
 export type TagModelType = Array<string>;
 
 export interface ILocationModel {
@@ -33,6 +35,7 @@ export interface ILocationModel {
   tags: TagModelType;
   weather: OpenWeatherModelType;
 }
+
 export type LocationsType = Array<ILocationModel>;
 
 export type OpenWeatherModelType = IOpenWeatherResponseModel | null;

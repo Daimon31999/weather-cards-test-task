@@ -1,5 +1,5 @@
-import { Button, Form, Input } from 'antd';
 import { FC, useEffect } from 'react';
+import { Button, Form, Input } from 'antd';
 import { logInAction } from '../../store/auth/authSlice';
 import { useAppDispatch } from '../../store/hooks';
 import { messages, VALID_PASSWORD, VALID_USER_NAME } from '../../utils';
@@ -41,7 +41,7 @@ const LoginPage: FC = () => {
         <Form.Item
           label={userNameInput.label}
           name={userNameInput.name}
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[{ required: true, message: userNameInput.placeholder }]}
         >
           <Input />
         </Form.Item>
@@ -49,7 +49,7 @@ const LoginPage: FC = () => {
         <Form.Item
           label={passwordInput.label}
           name={passwordInput.name}
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[{ required: true, message: passwordInput.placeholder }]}
         >
           <Input.Password />
         </Form.Item>

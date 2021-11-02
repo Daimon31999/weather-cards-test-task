@@ -1,8 +1,8 @@
-import { Button, Empty, Modal } from 'antd';
 import { FC, useState } from 'react';
+import { Button, Empty, Modal } from 'antd';
 import AddLocationModal from '../../components/AddLocationModal/AddLocationModal';
 import WeatherCard from '../../components/WeatherCard/WeatherCard';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import { selectorLocation } from '../../store/locations/locationsSlice';
 import { messages } from '../../utils';
 import './LandingPage.scss';
@@ -13,7 +13,6 @@ const { modalTitle } = modal;
 
 const LandingPage: FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const dispatch = useAppDispatch();
   const { locations } = useAppSelector(selectorLocation);
 
   const showModal = () => {

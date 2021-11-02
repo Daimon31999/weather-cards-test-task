@@ -15,7 +15,6 @@ const TagInput: FC = () => {
   const [state, setState] = useState(initialState);
   const tagsState = useAppSelector(selectorTags);
   const dispatch = useAppDispatch();
-
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -26,9 +25,8 @@ const TagInput: FC = () => {
 
   const handleClose = (removedTag: string) => {
     const tags = tagsState.filter((tag) => tag !== removedTag);
-    console.log(tags);
+
     dispatch(setTagsAction(tags));
-    // setState({ ...state, tags });
   };
 
   const showInput = () => {
@@ -41,10 +39,11 @@ const TagInput: FC = () => {
 
   const handleInputConfirm = () => {
     const { inputValue } = state;
+
     if (inputValue && tagsState.indexOf(inputValue) === -1) {
       dispatch(setTagsAction([...tagsState, inputValue]));
     }
-    console.log(tagsState);
+
     setState({
       inputVisible: false,
       inputValue: '',
