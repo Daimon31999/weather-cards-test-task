@@ -10,7 +10,11 @@ import './AddLocationModal.scss';
 const { locationInput, titleInput, descriptionInput, tagsInput, addLocationBtnMsg } =
   messages.components.addLocationModal.form;
 
-const AddLocationModal: FC = () => {
+interface IAddLocationModelProps {
+  handleCancel: () => void;
+}
+
+const AddLocationModal: FC<IAddLocationModelProps> = ({ handleCancel }) => {
   const [form] = useForm();
   const dispatch = useAppDispatch();
   const tags = useAppSelector(selectorTags);
@@ -90,7 +94,12 @@ const AddLocationModal: FC = () => {
             const validation = !!(titleValue && coordinatesValue && descriptionValue);
 
             return (
-              <Button type="primary" htmlType="submit" disabled={!validation}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                onClick={handleCancel}
+                disabled={!validation}
+              >
                 {addLocationBtnMsg}
               </Button>
             );

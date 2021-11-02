@@ -1,3 +1,5 @@
+import { IOpenWeatherResponseModel } from '../../api/openWeather';
+
 export interface IWrapperProps {
   children: React.ReactNode;
 }
@@ -31,3 +33,5 @@ export interface ILocationModel {
   tags: TagModelType;
 }
 export type LocationsType = Array<ILocationModel>;
+
+export type OpenWeatherModelType = IOpenWeatherResponseModel | null;

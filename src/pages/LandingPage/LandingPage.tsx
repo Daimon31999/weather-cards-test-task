@@ -1,5 +1,5 @@
 import { Button, Empty, Modal } from 'antd';
-import { FC, useState } from 'react';
+import { createRef, FC, useRef, useState } from 'react';
 import AddLocationModal from '../../components/AddLocationModal/AddLocationModal';
 import WeatherCard from '../../components/WeatherCard/WeatherCard';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -31,7 +31,7 @@ const LandingPage: FC = () => {
         <Button onClick={showModal}>Add Location</Button>
       </div>
       <Modal title={modalTitle} visible={isModalVisible} onCancel={handleCancel} footer={null}>
-        <AddLocationModal />
+        <AddLocationModal handleCancel={handleCancel} />
       </Modal>
       <div className="cards-wrapper">
         {locations.length ? (

@@ -12,6 +12,7 @@ apiClient.interceptors.request.use((request) => {
   request.params = {
     ...request.params,
     appid: API_KEY,
+    units: 'metric',
   };
 
   return request;

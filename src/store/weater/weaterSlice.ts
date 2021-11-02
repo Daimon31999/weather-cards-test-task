@@ -1,18 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { message as AntdMessage } from 'antd';
+import { IOpenWeatherResponseModel } from '../../api/openWeather';
 
 import { fetchWeatherByCountryNameRequest } from '../../api/requests';
 import { WeatherType } from '../../types/weater';
 import { messages } from '../../utils';
+import { OpenWeatherModelType } from '../../utils/global/interfaces';
 import { RootState } from '../store';
 
 export interface IWeatherState {
-  weatherData: WeatherType;
+  weatherData: OpenWeatherModelType;
   status: 'loading' | 'idle';
 }
 
 const initialState: IWeatherState = {
-  weatherData: [],
+  weatherData: null,
   status: 'idle',
 };
 
@@ -38,7 +40,7 @@ export const weatherSlice = createSlice({
 
     builder.addCase(getWeatherByCountryName.fulfilled, (state, action) => {
       state.status = 'idle';
-      state.weatherData.push(action.payload);
+      state.weatherData = action.payload;
     });
 
     builder.addCase(getWeatherByCountryName.rejected, (state) => {
@@ -49,7 +51,5 @@ export const weatherSlice = createSlice({
 });
 
 // export const { logInAction, logOutAction } = weatherSlice.actions;
-
-export const selectorWeather = (state: RootState) => state.weather;
 
 export default weatherSlice.reducer;

@@ -3,8 +3,8 @@ import { Card, Tag } from 'antd';
 import { FC, useEffect } from 'react';
 import Fallback from '../../router/Fallback';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { removeLocationAction } from '../../store/locations/locationsSlice';
-import { getWeatherByCountryName, selectorWeather } from '../../store/weater/weaterSlice';
+import { removeLocationAction, selectorWeather } from '../../store/locations/locationsSlice';
+import { getWeatherByCountryName } from '../../store/weater/weaterSlice';
 import { ILocationModel } from '../../utils/global/interfaces';
 import './WeatherCard.scss';
 
@@ -29,7 +29,7 @@ const WeatherCard: FC<IWeatherCardProps> = ({ location }) => {
     return <Fallback />;
   }
 
-  const temperature = weatherData.find((el) => el.name === city)?.main.temp;
+  const temperature = weatherData.main.temp;
 
   return (
     <Card className="weather-card" key={id} title={`${title} - ${city}`}>
@@ -38,7 +38,7 @@ const WeatherCard: FC<IWeatherCardProps> = ({ location }) => {
         <DeleteOutlined />
       </div>
       <p>Description: {description}</p>
-      <div className="temperature">{temperature} ℉</div>
+      <div className="temperature">{temperature} °C</div>
 
       {tags && tags.map((tag, i) => <Tag key={tag}>{tag}</Tag>)}
     </Card>

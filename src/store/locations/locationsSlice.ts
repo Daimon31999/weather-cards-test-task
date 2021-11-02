@@ -94,7 +94,8 @@ export const addLocationModalSlice = createSlice({
 export const { setTagsAction, addLocationAction, removeLocationAction } =
   addLocationModalSlice.actions;
 
-export const selectorTags = (state: RootState) => state.addLocationModal.tags;
-export const selectorLocations = (state: RootState) => state.addLocationModal.locations;
+export const selectorTags = (state: RootState) => state.location.location.tags;
+export const selectorLocations = (state: RootState) => state.location.location.locations;
+export const selectorWeather = (state: RootState) => state.location.weather;
 
 export default addLocationModalSlice.reducer;

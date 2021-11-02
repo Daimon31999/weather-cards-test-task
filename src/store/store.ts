@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import authReducer from './auth/authSlice';
 import pathReducer from './redirect/redirectSlice';
 import addLocationModalReducer from './locations/locationsSlice';
@@ -8,8 +9,10 @@ export const store = configureStore({
   reducer: {
     path: pathReducer,
     auth: authReducer,
-    addLocationModal: addLocationModalReducer,
-    weather: weatherReducer,
+    location: combineReducers({
+      location: addLocationModalReducer,
+      weather: weatherReducer,
+    }),
   },
 });
 
